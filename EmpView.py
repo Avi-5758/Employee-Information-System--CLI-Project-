@@ -1,30 +1,33 @@
-#EmpView.py<--Module Name
 import pickle
 def viewSingleEmployee():
-    #get all the records for Viewing single Employee Deatils Based on ENO
-    records=[] # Outer List
-    with open("C:\\Employee_Project\\employee.data","rb") as fp:
-        while(True):
-            try:
-                record = pickle.load(fp)
-                records.append(record)
-            except EOFError:
-                break
-    empno = int(input("Enter Employee Number:"))
-    found=False
+    records = []
+    try:
+        with open("C:\\Employee_Project\\employee.data", "rb") as fp:
+            while True:
+                try:
+                    records.append(pickle.load(fp))
+                except EOFError:
+                    break
+    except FileNotFoundError:
+        print("\nData file not found.")
+        return
+    print("-" * 50)
+    empno = input("Enter Employee Number to Search: ").strip()
+    found = False
     for record in records:
-        if(record[0]==empno):
-            rec=record
-            found=True
+        if str(record[0]) == str(empno):
+            print("\nMatch Found:")
+            print("-" * 35)
+            print(f"  Employee ID   : {record[0]}")
+            print(f"  Name          : {record[1]}")
+            print(f"  Salary        : ₹{record[2]:,.2f}")
+            print("-" * 35)
+            found = True
             break
-    print("-"*50)
-    if(found):
-        print("\tEmployee Number:{}".format(rec[0]))
-        print("\tEmployee Name:{}".format(rec[1]))
-        print("\tEmployee Salary:{}".format(rec[2]))
-    else:
-        print("\tEmployee Number Does Not Exist")
+
+    if not found:
+        print("\tEmployee Number Not Found")
     print("-" * 50)
 
-
-
+#Main program.
+viewSingleEmployee()
