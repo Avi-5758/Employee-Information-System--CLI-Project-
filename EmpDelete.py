@@ -13,12 +13,16 @@ def deleteEmployee():
     #Get Employee Number for Removing the Record
     print("-"*50)
     found=False
-    empno=int(input("Enter Employee Number to Delete:"))
-    for record in records:
-        if(str(record[0])==str(empno)):
-            rec=record
-            found=True
-            break
+    try:
+
+        empno=int(input("Enter Employee Number to Delete:"))
+        for record in records:
+            if(str(record[0])==str(empno)):
+                rec=record
+                found=True
+                break
+    except ValueError:
+        print("\t Enter Only Numeric Value")
     if(found):
         records.remove(rec)
         #Re-write the Remaining Records to File after delete
@@ -29,4 +33,7 @@ def deleteEmployee():
     else:
         print("\tEmployee Number Not Found")
     print("-"*50)
+
+
+deleteEmployee()
 
